@@ -36,10 +36,20 @@ program exercise1
 
   real (kp) :: an
   integer   :: n = 0
+  
+  integer, parameter :: nmax = 6
+  real (kp), dimension(:), allocatable :: a_arr
+  real (kp), dimension(:), allocatable :: b_arr
+  real (kp), dimension(:), allocatable :: t_arr
+  real (kp) :: eps = 1d-10
+  real (kp) :: pi_true = 4.0_kp * atan(1.0_kp)
+  real (kp) :: pi
+  integer :: i = 0
 
   do
-    print *, "Approximation n, pi: ", n, (a + b)**2/(4.0*t)
-    if (n > 6) exit
+    pi = (a + b)**2/(4.0*t)
+    print *, "Approximation n, pi: ", n, pi
+    if (abs(pi - pi_true) <= eps) exit
 
     an = a
 
@@ -47,7 +57,42 @@ program exercise1
     b = sqrt(an*b)
     t = t - p*(an - a)**2
     p = 2.0*p
+
     n = n + 1
   end do
+  allocate(a_arr(n+1))
+  allocate(b_arr(n+1))
+  allocate(t_arr(n+1))
 
+  a = 1.0_kp
+  b = 1.0/sqrt(2.0_kp)
+  t = 0.25_kp
+  p = 1.0_kp
+  a_arr(1) = a
+  b_arr(1) = b
+  t_arr(1) = t
+  do i=1, n
+    pi = (a + b)**2/(4.0*t)
+    print *, "Approximation n, pi: ", i, pi
+
+    an = a
+
+    a = (an + b)/2.0
+    b = sqrt(an*b)
+    t = t - p*(an - a)**2
+    p = 2.0*p
+
+    a_arr(i+1) = a
+    b_arr(i+1) = b
+    t_arr(i+1) = t
+
+  end do
+
+  print *, "a: ", a_arr
+  print *, "b: ", b_arr
+  print *, "t: ", t_arr
+
+  do i=1, n
+    print *, "pi_", i, "=", (a_arr(i) + b_arr(i))**2 / (4.0*t_arr(i))
+  end do
 end program exercise1
