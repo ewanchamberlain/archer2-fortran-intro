@@ -26,5 +26,23 @@ program exercise3
   !  Compute the first two approximations pi_0 and pi_1.
 
   implicit none
+  real :: a_0 = 1.
+  real :: b_0 = 1. / sqrt(2.)
+  real :: t_0 = 1. / 4.
+  real :: p_0 = 1.
+  real :: pi_0
+  real :: a_1 
+  real :: b_1
+  real :: t_1
+  real :: pi_1
 
+  pi_0 = (a_0 + b_0)**2 / (4*t_0)
+
+  a_1 = (a_0 + b_0) / 2
+  b_1 = sqrt(a_0 * b_0)
+  t_1 = t_0 - p_0 * (a_1 - a_0)**2
+  pi_1 = (a_1 + b_1)**2 / (4*t_1)
+
+  print *, "pi_0 = ", pi_0
+  print *, "pi_1 = ", pi_1
 end program exercise3

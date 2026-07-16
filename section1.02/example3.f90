@@ -4,7 +4,7 @@ program example3
 
   ! Print kind type parameters, and storage size, for different types
 
-  integer, parameter :: my_e_k = kind(1.e0)
+  integer, parameter :: my_e_k = kind(2.e0)
   integer, parameter :: my_d_k = kind(1.d0)
 
   real (my_e_k) :: a
