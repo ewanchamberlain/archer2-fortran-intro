@@ -39,6 +39,12 @@ program exercise2
   real (kp) :: a, b, c
   real (kp) :: conductance
 
+  integer :: k
+  integer :: nmax = 1000
+  real (kp) :: a_k
+
+  real (kp) :: sum = 0
+
   a = 0.5*pi
   b = 0.5*w
   c = 0.5*h
@@ -51,5 +57,16 @@ program exercise2
   print *, "Value of h:       ", h
   print *, "Value of pi:      ", pi
   print *, "Approximation is: ", conductance
+
+  do k=nmax, 2, -1
+    a_k = (2 * k - 1) * pi / 2
+    sum = sum + tanh(a_k * b / c) / a_k**5
+
+    if (mod(k, 20)==0) then
+      print *, "k=", k, ": C=", conductance + sum
+    end if
+
+
+  end do
 
 end program exercise2
