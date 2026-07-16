@@ -18,5 +18,43 @@ program exercise1
   !   a = 4.0, b = -8.0, c = 4.0     (=> two equal roots)
 
   implicit none
+  real :: a = 4.
+  real :: b = -8.
+  real :: c = 4.
+  real :: Delta
+  real :: x1re
+  real :: x1im = 0
+  real :: x2re
+  real :: x2im = 0
+  complex :: Deltaz = (0., 0.)
+  complex :: z1
+  complex :: z2
+
+  Delta = b**2 - 4. * a * c
+
+  ! Real analysis
+
+  x1re = -b / (2 * a)
+  x2re = -b / (2 * a)
+  if (Delta >= 0) then
+    x1re = x1re + sqrt(Delta) / (2 * a)
+    x2re = x2re - sqrt(Delta) / (2 * a)
+  else
+    x1im = sqrt(-Delta) / (2 * a)
+    x2im = -sqrt(-Delta) / (2 * a)
+  end if
+  
+  print *, "Real analysis:"
+  print *, "  x1 = ", x1re, " + ", x1im, "i"
+  print *, "  x2 = ", x2re, " + ", x2im, "i"
+
+  ! Complex analysis
+  Deltaz%re = Delta
+  z1 = (-b + sqrt(Deltaz)) / (2 * a)
+  z2 = (-b - sqrt(Deltaz)) / (2 * a)
+
+  print *, "Complex analysis:"
+  print *, "  x1 = ", z1
+  print *, "  x2 = ", z2
 
 end program exercise1

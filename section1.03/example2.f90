@@ -5,7 +5,7 @@ program example2
   implicit none
 
   character (len = *), parameter :: string1 = "don't"   ! 5 characters
-  character (len = 5)            :: string2 = "Don""t"  ! 5 characters
+  character (len = 2)            :: string2 = "Don""t"  ! 5 characters
   character (len = 6)            :: string3 = 'don''t'  ! 5 characters + blank
 
   print *, "string1: ", string1
