@@ -15,6 +15,16 @@ program game_of_life
   integer, parameter :: ncol = 21
   integer, dimension(nrow, ncol) :: board
 
+  character (len=1), dimension(ncol) :: row_state
+  integer :: i
+  integer :: j
+  integer :: neighbour_sum
+  integer, dimension(nrow, ncol, 2) :: board2
+  integer :: tmax = 5
+  integer :: t = 1
+  integer :: idx
+  integer :: jdx
+
   ! Initialise the starting state of the board.
   ! The central section of the 21x21 grid looks like this:
   ! .........
@@ -31,7 +41,14 @@ program game_of_life
   board(13,  11) = 1
   board(9:13,13) = 1
 
+
   !  1. Output to screen the initial view of the board.
+  print *, "Initial board set-up"
+  do i=1, nrow
+    row_state = "."
+    where (board(i, :) == 1) row_state(:) = "#"
+    print *, row_state
+  end do
 
   ! HINT:
   ! The output is printed row by row, so we could create the row of characters
@@ -54,6 +71,24 @@ program game_of_life
 
 
   ! 2. Compute and output the new state for each position of the board ...
+  print *, "First iteration:"
+  do i=1, nrow
+    row_state = "."
+    where (board(i, :) == 1) row_state(:) = "#"
+    do j=1, ncol
+      if (i==1 .or. i==nrow .or. j==1 .or. j==ncol) cycle
+      neighbour_sum = sum(board(i-1, j-1:j+1))
+      neighbour_sum = neighbour_sum + board(i, j-1) + board(i, j+1)
+      neighbour_sum = neighbour_sum + sum(board(i+1, j-1:j+1))
+
+      if (board(i, j) == 0) then
+        if (neighbour_sum == 3) row_state(j) = "#"
+      else
+        if (.not. (neighbour_sum == 2 .or. neighbour_sum == 3)) row_state(j) = "."
+      end if
+    end do
+    print *, row_state
+  end do
   !    HINT
   !    Do not try, at this stage, anything at the perimeter.
   !    Do not try to update the board; just use the character array
@@ -61,6 +96,52 @@ program game_of_life
 
 
   ! 3. Time stepping, run and output the first four or five steps
+  board2(:, :, 1)    = 0
+  board2(9:13, 9, 1) = 1
+  board2( 9,  11, 1) = 1
+  board2(13,  11, 1) = 1
+  board2(9:13,13, 1) = 1
+  board2(:, :, 2) = 0
+
+  print *, "Initial board set-up"
+  do i=1, nrow
+    row_state = "."
+    where (board2(i, :, 1) == 1) row_state(:) = "#"
+    print *, row_state
+  end do
+
+  do t=1, tmax
+    idx = 2 - mod(t, 2)
+    jdx = mod(t, 2) + 1
+    print *, "t = ", t
+    do i=1, nrow
+      do j=1, ncol
+        if (i==1 .or. i==nrow .or. j==1 .or. j==ncol) cycle
+
+        neighbour_sum = sum(board2(i-1, j-1:j+1, idx))
+        neighbour_sum = neighbour_sum + board2(i, j-1, idx) + board2(i, j+1, idx)
+        neighbour_sum = neighbour_sum + sum(board2(i+1, j-1:j+1, idx))
+
+        if (board2(i, j, idx) == 0) then
+          if (neighbour_sum == 3) then
+            board2(i, j, jdx) = 1
+          else
+            board2(i, j, jdx) = 0
+          end if
+        else
+          if (.not. (neighbour_sum == 2 .or. neighbour_sum == 3)) then
+            board2(i, j, jdx) = 0
+          else
+            board2(i, j, jdx) = 1
+          end if
+        end if
+      end do
+
+      row_state = "."
+      where (board2(i, :, jdx) == 1) row_state(:) = "#"
+      print *, row_state
+    end do
+  end do
   !    using an additional outer loop over the time step.
   !    HINT
   !    a. You will need some way to "remember" the previous state
