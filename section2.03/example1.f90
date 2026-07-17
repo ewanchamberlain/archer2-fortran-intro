@@ -10,12 +10,12 @@ program example1
   a1 = 2*a2
 
   ! Set b1 to be the first column of a1
-  b1 = a1
+  b1 = a1(:, 1)
 
   print *, "b1 is: ", b1
 
   ! Set b1 to first half of first row of a2()
-  b1(1:4) = a2(1, 4:4)
+  b1(1:4) = a2(1, 1:4)
 
   print *, "b1 is: ", b1
 

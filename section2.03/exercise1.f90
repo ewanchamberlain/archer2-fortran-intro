@@ -1,5 +1,4 @@
 program exercise1
-
   ! Here's a version of the program that computes the two roots of
   !   a x^2 + b x + c = 0
   ! as real numbers, and then as complex numbers.
