@@ -10,12 +10,16 @@ program program1
   real, dimension(0:imax+1,0:jmax+1) :: a
   real, dimension(1:imax,  1:jmax)   :: b
 
+  print *, lbound(a), ubound(a)
+  print *, lbound(b), ubound(b) 
+
+  a(:, :) = 0.0
   a(1:imax,1:jmax) = 1.0
   b(:,:) = 1.0
 
-  call array_action2(a, b)
-  call array_action2(a(1:imax,1:jmax), b)
+  ! call array_action2(b, a)
+  call array_action2(b, a(1:imax,1:jmax))
 
-  print *, "Values b: ", b(:,:)
+  print *, "Values a: ", a(:,:)
 
 end program program1
