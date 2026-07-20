@@ -9,7 +9,7 @@ contains
 
   subroutine assign_x(x)
 
-    real, intent(in) :: x
+    real, intent(out) :: x
 
     x = 1.0
 
@@ -25,7 +25,7 @@ contains
 
   subroutine increment_x(x)
 
-    real, intent(in) :: x
+    real, intent(inout) :: x
 
     x = x + 1.0
 
