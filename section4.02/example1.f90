@@ -10,11 +10,11 @@ program example1
   real (real64)        :: avar = 40.0
   character (len = 10) :: cvar = "Hello"
 
-  print "('Format i10:    ',    i10)", ivar
+  print "('Format i10:    ',    b32.32)", ivar
   print "('Format i10.10: ', i10.10)", ivar
-  print "('Format l10:    ',    l10)", lvar
+  print "('Format l10:    ',    b32.32)", lvar
   print "('Format f10.3:  ',  f10.3)", avar
-  print "('Format e10.3:  ',  e10.3)", avar
+  print "('Format e10.3:  ',  b64.64)", avar
   print "('Format en10.3: ', en10.3)", avar
   print "('Format a10:    ',    a10)", cvar
   ! Botched format specifiers
@@ -22,8 +22,8 @@ program example1
   ivar = -40
   avar = huge(avar)
 
-  print "('Format i1:     ',    i 2)", ivar
-  print "('Format f10.3:  ',  f10.3)", avar
+  print "('Format i1:     ',    i3)", ivar
+  print "('Format f10.3:  ',  es10.3)", avar
   print "('Format e10.3:  ',  e10.3)", avar
 
   print "('Others:')"
