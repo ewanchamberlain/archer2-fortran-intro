@@ -22,8 +22,20 @@ program exercise_program
   real (mykind), dimension(nmax)      :: d = [1.0, 4.0, 5.0, 6.0]
   real (mykind), dimension(nmax)      :: x
 
-  call tridiagonal_solve(b, a, c, d, x)
+  type (tridiag_matrix) :: m
+  type (tridiag_matrix) :: simp_m
+  m = create_matrix(b, a, c)
+
+  call tridiagonal_solve(m, d, x)
 
   print *, "Solution ", x(:)
+
+  simp_m = create_simple_matrix(2.43, 1.2, nmax)
+  call tridiagonal_solve(simp_m, d, x)
+
+  print *, "Solution ", x(:)
+
+  call destroy_matrix(m)
+  call destroy_matrix(simp_m)
 
 end program exercise_program

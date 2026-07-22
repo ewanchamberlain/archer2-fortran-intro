@@ -6,6 +6,7 @@ module module1
   implicit none
 
   type, public :: my_rng
+    private
     integer (int64) :: a = 45991
     integer (int32) :: s = 1
     integer (int64) :: c = 0
