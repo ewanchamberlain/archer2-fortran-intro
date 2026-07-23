@@ -4,10 +4,12 @@ program example1
 
   implicit none
 
-  integer          :: datum = 1
+  integer, target          :: datum = 1
   integer, pointer :: p => null()
 
+  print *, associated(p)
   p => datum
+  print *, associated(p)
   p = 2
 
   print *, "datum is ", datum
