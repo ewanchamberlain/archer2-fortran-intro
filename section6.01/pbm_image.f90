@@ -6,9 +6,15 @@ module pbm_image
   implicit none
   private
 
+  interface write_pbm
+    module procedure write_logical_pbm
+    module procedure write_integer_pbm
+  end interface write_pbm
+  public :: write_pbm
+
 contains
 
-  pure function logical_to_pbm(lvar) result (ivar)
+  pure elemental function logical_to_pbm(lvar) result (ivar)
 
     ! Utility to return 0 or 1 for .false. and .true.
 
@@ -44,13 +50,14 @@ contains
     ! We do this via an integer array...
 
     integer, dimension(size(map, dim=1), size(map, dim=2)) :: imap
-    integer :: i, j
+    ! integer :: i, j
 
-    do j = 1, size(map, dim = 2)
-       do i = 1, size(map, dim = 1)
-          imap(i,j) = logical_to_pbm(map(i,j))
-       end do
-    end do
+    ! do j = 1, size(map, dim = 2)
+    !    do i = 1, size(map, dim = 1)
+    !       imap(i,j) = logical_to_pbm(map(i,j))
+    !    end do
+    ! end do
+    imap(:,:) = logical_to_pbm(map(:,:))
 
     call write_integer_pbm(imap, filename, ierr)
 
